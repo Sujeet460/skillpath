@@ -6,15 +6,13 @@ Skillpath demonstrates a live API-driven course catalogue with country-based pri
 
 ## Live Demo
 
-**Framer:**
-`PASTE_YOUR_PUBLISHED_FRAMER_LINK_HERE`
+**Live Application:**  
+`https://skillpath-gilt-beta.vercel.app/`
 
 ## Repository
 
-**GitHub:**
-`PASTE_YOUR_GITHUB_REPOSITORY_LINK_HERE`
-
----
+**GitHub:**  
+`https://github.com/Sujeet460/skillpath`
 
 ## Features
 
@@ -299,7 +297,7 @@ npx tsc --noEmit
 
 AI tools were used during development.
 
-**AI used:** ChatGPT and `[INSERT YOUR AI IDE NAME]`.
+**AI used:** ChatGPT and antigravity.
 
 AI was used for architecture discussion, API error-handling review, implementation assistance, debugging, and compliance checks.
 

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { addPropertyControls, ControlType } from "framer";
+import axios from "axios";
 import type { Course } from "./types";
 import { Hero } from "./components/Hero";
 import { Footer } from "./components/Footer";
 import { Courses } from "./components/Courses";
 import { LoadingState, ErrorState, EmptyState } from "./components/States";
+import { apiService } from "./services/api";
 
 type SkillpathProps = {
   accentColor?: string;
@@ -35,19 +37,15 @@ export const Skillpath = ({
       ? "error" 
       : "success";
 
-  // Independent fetch function for courses
+  // Independent fetch function for courses via Axios service
   const fetchCourses = async (signal?: AbortSignal) => {
     setCoursesLoading(true);
     setCoursesError(null);
     try {
-      const res = await fetch("https://syncsphere-hiv6.onrender.com/assignment/course-data", { signal });
-      if (!res.ok) {
-        throw new Error(`Failed to load courses (HTTP ${res.status})`);
-      }
-      const data = await res.json();
+      const data = await apiService.getCourses(signal);
       setCourses(data);
     } catch (err: any) {
-      if (err.name !== "AbortError") {
+      if (!axios.isCancel(err)) {
         setCoursesError("Unable to load courses. Something went wrong while loading the courses.");
       }
     } finally {
@@ -55,23 +53,19 @@ export const Skillpath = ({
     }
   };
 
-  // Independent fetch function for country
+  // Independent fetch function for country via Axios service
   const fetchCountry = async (signal?: AbortSignal) => {
     setCountryLoading(true);
     setCountryError(null);
     try {
-      const res = await fetch("https://syncsphere-hiv6.onrender.com/assignment/country-code", { signal });
-      if (!res.ok) {
-        throw new Error(`Failed to resolve country (HTTP ${res.status})`);
-      }
-      const data = await res.json();
+      const data = await apiService.getCountryCode(signal);
       if (data && data.country_code) {
         setCountryCode(data.country_code);
       } else {
         throw new Error("Invalid country response structure.");
       }
     } catch (err: any) {
-      if (err.name !== "AbortError") {
+      if (!axios.isCancel(err)) {
         setCountryError("Failed to load country details.");
       }
     } finally {
